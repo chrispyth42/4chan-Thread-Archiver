@@ -45,6 +45,11 @@ The 'Posts' table contains every post object that has been retrieved from all in
         SELECT MAX(ID) FROM Posts
         WHERE Board = (board) AND ParentID = (threadID)
 
+Because post IDs only increment, it's possible to test if a post exists in a given thread by making 1 query for the maximum thread number currently in the database, and compare incoming post IDs to that integer in order to determine if they exist in the database
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+The function that handles the input file isn't too complicated, but apart from reading in the file, it also handles removing thread URLs from the input file once the they either become archived (becoming immutable), or are deleted from 4chan. This eliminates unnecessary requests
 
 -----------------------------------------------------------------------------------------------------------------------------
 
