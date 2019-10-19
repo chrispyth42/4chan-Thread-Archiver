@@ -3,35 +3,36 @@ threadSaver.py takes a list of 4chan thread URLs specified in threads.txt (one p
 
 It was a good challenge! Trying to come up with a schema to house thier JSON, and write it in a way that's efficient to query. The schema of the database is as follows:
 
-CREATE TABLE IF NOT EXISTS Threads (
-
-    ID INT NOT NULL, 
-    Board Varchar(10) NOT NULL,
-    Title Varchar(100),
-    Comment Varchar(2000), 
-    PostTime Varchar(30) NOT NULL, 
-    Replies INT NOT NULL, 
-    ImageCount INT NOT NULL,
-    UniqueIPs INT NOT NULL, 
-    OP Varchar(100) NOT NULL,
-    IsArchived BIT NOT NULL,
-    PRIMARY KEY(ID,Board)
+    CREATE TABLE IF NOT EXISTS Threads (
+        ID INT NOT NULL, 
+        Board Varchar(10) NOT NULL,
+        Title Varchar(100),
+        Comment Varchar(2000), 
+        PostTime Varchar(30) NOT NULL, 
+        Replies INT NOT NULL, 
+        ImageCount INT NOT NULL,
+        UniqueIPs INT NOT NULL, 
+        OP Varchar(100) NOT NULL,
+        IsArchived BIT NOT NULL,
+        PRIMARY KEY(ID,Board)
+    )
     
-CREATE TABLE IF NOT EXISTS Posts (
-    ID INT NOT NULL,
-    ParentID INT NOT NULL,
-    Board VARCHAR(10) NOT NULL,
-    Comment Varchar(2000),
-    PostTime Varchar(30) NOT NULL,
-    TimeStamp INT NOT NULL,
-    OP Varchar(100) NOT NULL,
-    ImgName Varchar(500),
-    ImgExt Varchar(5),
-    ImgW INT,
-    ImgH INT,
-    ImgSize INT,
-    ImgDeleted BIT,
-    PRIMARY KEY (ID,ParentID,Board)
+    CREATE TABLE IF NOT EXISTS Posts (
+        ID INT NOT NULL,
+        ParentID INT NOT NULL,
+        Board VARCHAR(10) NOT NULL,
+        Comment Varchar(2000),
+        PostTime Varchar(30) NOT NULL,
+        TimeStamp INT NOT NULL,
+        OP Varchar(100) NOT NULL,
+        ImgName Varchar(500),
+        ImgExt Varchar(5),
+        ImgW INT,
+        ImgH INT,
+        ImgSize INT,
+        ImgDeleted BIT,
+        PRIMARY KEY (ID,ParentID,Board)
+    )
 
 -----------------------------------------------------------------------------------------------------------------------------
 
