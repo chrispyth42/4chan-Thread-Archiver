@@ -4,6 +4,7 @@ threadSaver.py takes a list of 4chan thread URLs specified in threads.txt (one p
 It was a good challenge! Trying to come up with a schema to house thier JSON, and write it in a way that's efficient to query. The schema of the database is as follows:
 
 CREATE TABLE IF NOT EXISTS Threads (
+
     ID INT NOT NULL, 
     Board Varchar(10) NOT NULL,
     Title Varchar(100),
