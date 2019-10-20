@@ -36,7 +36,7 @@ It was a good challenge! Trying to come up with a schema to house thier JSON, an
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-The 'Threads' table contains metadata abou the thread. Such as how many unique IP addresses have posted to it, how many replies it has, etc. This data is all stored within the first 'post' object of each thread, and is updated every time a request is made to a thread
+The 'Threads' table contains metadata about the thread. Such as how many unique IP addresses have posted to it, how many replies it has, etc. This data is all stored within the first 'post' object of each thread, and is updated every time the script makes a call to a thread
 
 -----------------------------------------------------------------------------------------------------------------------------
 
@@ -45,11 +45,11 @@ The 'Posts' table contains every post object that has been retrieved from all in
         SELECT MAX(ID) FROM Posts
         WHERE Board = (board) AND ParentID = (threadID)
 
-Because post IDs only increment, it's possible to test if a post exists in a given thread by making 1 query for the maximum thread number currently in the database, and compare incoming post IDs to that integer in order to determine if they exist in the database
+Because post IDs only increment, it's possible to test if a post exists in a given thread by making 1 query for the maximum post ID currently in the database for that thread, and compare incoming post IDs to that integer in order to determine if they exist in the database
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-The function that handles the input file isn't too complicated, but apart from reading in the file, it also handles removing thread URLs from the input file once the they either become archived (becoming immutable), or are deleted from 4chan. This eliminates unnecessary requests
+The function that handles the input file isn't too complicated, but apart from reading in the file, it also handles removing thread URLs from the input file once the they either become archived (becoming immutable), or are deleted from 4chan. This eliminates unnecessary requests, and allows this script to manage itself if assigned to a CRON job
 
 -----------------------------------------------------------------------------------------------------------------------------
 
