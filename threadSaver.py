@@ -161,7 +161,7 @@ def storeThreadData(rootPost,Board):
         Archived = 1
 
     #Query to see if the thread is already in the DB, to determine if INSERT or UPDATE
-    c.execute("SELECT ID FROM Threads WHERE ID=" + str(ID))
+    c.execute("SELECT ID FROM Threads WHERE ID=%i AND Board=%b" % (ID,Board))
     if(not c.fetchall()):
         c.execute("INSERT INTO Threads VALUES (%i,%s,%s,%s,%s,%i,%i,%i,%s,%i)" % (ID,Board,Title,Comment,PostTime,Replies,ImageCount,UniqueIPs,OP,Archived))
     else:
