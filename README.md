@@ -54,4 +54,5 @@ The function that handles the input file isn't too complicated, but apart from r
 -----------------------------------------------------------------------------------------------------------------------------
 
 Be sure to follow the API rules when running this though. The main rule pertaining to this script is just not calling the API JSON version of a thread more than once every 10 seconds (which shouldn't be an issue)
+
 https://github.com/4chan/4chan-API
