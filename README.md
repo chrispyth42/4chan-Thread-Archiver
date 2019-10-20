@@ -36,16 +36,16 @@ It was a good challenge! Trying to come up with a schema to house thier JSON, an
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-The 'Threads' table contains metadata about the thread. Such as how many unique IP addresses have posted to it, how many replies it has, etc. This data is all stored within the first 'post' object of each thread, and is updated in the database every time the script makes a call to a thread
+The 'Threads' table contains metadata about the thread. Such as how many unique IP addresses have posted to it, how many replies it has, etc. On 4chan, this data is all stored within the first 'post' object of each thread. In this script, it takes in that data every time it makes a request for a thread, and updates the database accordingly with the most up to date data
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-The 'Posts' table contains every post object that has been retrieved from all input threads (post objects are immutable). The interesting part of designing this table was figuring out how to query it without costing too much performance as it grows in size. The solution I came up with was this query:
+The 'Posts' table contains every post object that has been retrieved from all input threads. The interesting part of designing this table was figuring out how to query it without costing too much performance as it grows in size. Post objects are immutable aside from the thread attributes in the header post, so updating isn't an issue. But I did have to come up with a way to efficiently check if a post already exists in the database without doing a SELECT for every incoming post. The solution I came up with was this query:
 
         SELECT MAX(ID) FROM Posts
         WHERE Board = (board) AND ParentID = (threadID)
 
-Because post IDs only increment, it's possible to test if a post has already been inserted by making 1 query for the maximum post ID currently in the database for that thread, and compare incoming post IDs to that integer in order to determine if they exist in the database
+Because post IDs only increment, it's possible to test if a post has already been inserted by making 1 query for the maximum post ID currently in the database for that thread, and comparing incoming post IDs to that integer in order to determine if they exist in the database
 
 -----------------------------------------------------------------------------------------------------------------------------
 
