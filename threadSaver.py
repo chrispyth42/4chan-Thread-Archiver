@@ -6,6 +6,9 @@ import re
 import time
 import os
 
+#Disable warnings thrown by requests (I disable ssl verification when getting images because at the time of posting, 4chan's SSL is expired for the image hosting domain)
+requests.packages.urllib3.disable_warnings() 
+
 #Connect to database
 db = sqlite3.connect("chanStore.sqlite")
 c = db.cursor()
@@ -186,19 +189,18 @@ def saveImage(url,board,threadID,postID,extention,filename,threadtitle):
     #Create directories if they don't exist
     if not os.path.exists(directory):
         os.makedirs(directory)
-    
+        
     #Downloads and writes 1024 byte blocks from the URL until it recieves an empty block
     #This downloads files without overloading python's memory
     with open(filename, 'wb') as handler:
-        data = requests.get(url,stream=True)
+        data = requests.get(url,stream=True, verify=False) #Disable SSL verification due to their cert being expired rn
         for block in data.iter_content(1024):
             if not block:
                 break
             handler.write(block)
-
-    #Print feedback, and sleep after the request is done
-    print("saved: " + filename.split('/')[3])
-    time.sleep(1)
+ 
+        print("saved: " + filename.split('/')[3])
+        time.sleep(1)
 
 #Cleans strings so they can be neatly passed into the database (4chan comments and stuff contain HTML tags)
 def cleanse(string):
@@ -246,7 +248,7 @@ def saveThreads():
         #Ignore blank lines
         if link:
             try:
-            #If a thread returns false (indictating it doesn't exist or is now archived), remove it from the archive file
+                #If a thread returns false (indictating it doesn't exist or is now archived), remove it from the archive file
                 print("-"*10 + link + "-"*10)
                 t = saveThread(link)
                 if t:
