@@ -1,5 +1,7 @@
 # 4chan-Thread-Archiver
-threadSaver.py takes a list of 4chan thread URLs specified in threads.txt (one per line), and archives them into an sqlite database. It also downloads all images in those threads into an 'images' folder in the current directory. I don't use 4chan very much, and was a bit iffy about posting a script that interfaces with the site here (given its reputation). But it was a great exercise! Especially with how neatly they offer up their site for people who want to code it
+threadSaver.py takes a list of 4chan thread URLs specified in threads.txt (one per line), and archives them into an sqlite database. It also downloads all images in those threads into an 'images' folder in the current directory. I don't use 4chan very much, and was a bit iffy about posting a script that interfaces with the site here (given its reputation, and the sort of content that's commonly posted there). But it was a great exercise! Especially with how neatly they offer up their site for people who want to code it
+
+This script should belong under the DataCollection repo, but I feel that it's a large enough project to warrant showcasing it in its own repository 
 
 It was a good challenge! Trying to come up with a schema to house thier JSON, and write it in a way that's efficient to query. The schema of the database is as follows:
 
