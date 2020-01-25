@@ -6,8 +6,10 @@ import re
 import time
 import os
 
-#Disable warnings thrown by requests (If their ssl certificate is expired and the warning needs to be ignored
+#Disable warnings thrown by requests (If they forget to renew their ssl certificate is expired and the warning needs to be ignored)
 #requests.packages.urllib3.disable_warnings() 
+
+#Also, this script was written before I was accustomed to using f-strings (rip)
 
 #Connect to database
 db = sqlite3.connect("chanStore.sqlite")
