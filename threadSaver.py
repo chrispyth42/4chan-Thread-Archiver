@@ -6,8 +6,8 @@ import re
 import time
 import os
 
-#Disable warnings thrown by requests (I disable ssl verification when getting images because at the time of posting, 4chan's SSL is expired for the image hosting domain)
-requests.packages.urllib3.disable_warnings() 
+#Disable warnings thrown by requests (If their ssl certificate is expired and the warning needs to be ignored
+#requests.packages.urllib3.disable_warnings() 
 
 #Connect to database
 db = sqlite3.connect("chanStore.sqlite")
@@ -128,7 +128,7 @@ def saveThread(postUrl):
             
             #If the image exists on 4chan, proceed to download it
             if (ImgName != 'NULL') and (ImgDeleted != "1"):
-                imageURL = 'https://is2.4chan.org/' + board.replace("'",'') + '/' + str(post['tim']) + post['ext']
+                imageURL = 'https://i.4cdn.org/' + board.replace("'",'') + '/' + str(post['tim']) + post['ext']
 
                 #Passing target URL, board, thread number, post ID, image extention, image filename, and thread title to the image saving function
                 saveImage(imageURL,board,threadno,ID,post['ext'],cleanse(post['filename']),Title)
@@ -193,7 +193,7 @@ def saveImage(url,board,threadID,postID,extention,filename,threadtitle):
     #Downloads and writes 1024 byte blocks from the URL until it recieves an empty block
     #This downloads files without overloading python's memory
     with open(filename, 'wb') as handler:
-        data = requests.get(url,stream=True, verify=False) #Disable SSL verification due to their cert being expired rn
+        data = requests.get(url,stream=True)
         for block in data.iter_content(1024):
             if not block:
                 break
@@ -249,7 +249,7 @@ def saveThreads():
         if link:
             try:
                 #If a thread returns false (indictating it doesn't exist or is now archived), remove it from the archive file
-                print("-"*10 + link + "-"*10)
+                print("-"*10 + " " + link + " " + "-"*10)
                 t = saveThread(link)
                 if t:
                     output += link + "\n"
